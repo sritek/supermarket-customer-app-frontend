@@ -37,28 +37,11 @@ export const useAddToCart = () => {
     onSuccess: async (data) => {
       // Increment mutation version to force UI updates
       incrementCartMutationVersion();
-      // Immediately update cache with new data to trigger UI updates
-      if (data?.cart) {
-        // Use setQueryData with updater function to ensure React Query sees it as changed
-        queryClient.setQueryData(["cart"], () => {
-          // Always return new object to force React Query to notify subscribers
-          return {
-            success: data.success,
-            cart: {
-              _id: data.cart._id,
-              user: data.cart.user,
-              items: data.cart.items.map((item) => ({
-                product:
-                  typeof item.product === "object"
-                    ? { ...item.product }
-                    : item.product,
-                quantity: item.quantity,
-              })),
-            },
-          };
-        });
+      // Set the query data directly from the API response (already has populated products)
+      if (data) {
+        queryClient.setQueryData(["cart"], data);
       }
-      // Also invalidate to mark as stale
+      // Also invalidate to mark as stale and refetch
       queryClient.invalidateQueries({
         queryKey: ["cart"],
         refetchType: "active",
@@ -84,28 +67,11 @@ export const useUpdateCartItem = () => {
     onSuccess: async (data) => {
       // Increment mutation version to force UI updates
       incrementCartMutationVersion();
-      // Immediately update cache with new data to trigger UI updates
-      if (data?.cart) {
-        // Use setQueryData with updater function to ensure React Query sees it as changed
-        queryClient.setQueryData(["cart"], () => {
-          // Always return new object to force React Query to notify subscribers
-          return {
-            success: data.success,
-            cart: {
-              _id: data.cart._id,
-              user: data.cart.user,
-              items: data.cart.items.map((item) => ({
-                product:
-                  typeof item.product === "object"
-                    ? { ...item.product }
-                    : item.product,
-                quantity: item.quantity,
-              })),
-            },
-          };
-        });
+      // Set the query data directly from the API response (already has populated products)
+      if (data) {
+        queryClient.setQueryData(["cart"], data);
       }
-      // Also invalidate to mark as stale
+      // Also invalidate to mark as stale and refetch
       queryClient.invalidateQueries({
         queryKey: ["cart"],
         refetchType: "active",
@@ -125,28 +91,11 @@ export const useRemoveFromCart = () => {
     onSuccess: async (data) => {
       // Increment mutation version to force UI updates
       incrementCartMutationVersion();
-      // Immediately update cache with new data to trigger UI updates
-      if (data?.cart) {
-        // Use setQueryData with updater function to ensure React Query sees it as changed
-        queryClient.setQueryData(["cart"], () => {
-          // Always return new object to force React Query to notify subscribers
-          return {
-            success: data.success,
-            cart: {
-              _id: data.cart._id,
-              user: data.cart.user,
-              items: data.cart.items.map((item) => ({
-                product:
-                  typeof item.product === "object"
-                    ? { ...item.product }
-                    : item.product,
-                quantity: item.quantity,
-              })),
-            },
-          };
-        });
+      // Set the query data directly from the API response (already has populated products)
+      if (data) {
+        queryClient.setQueryData(["cart"], data);
       }
-      // Also invalidate to mark as stale
+      // Also invalidate to mark as stale and refetch
       queryClient.invalidateQueries({
         queryKey: ["cart"],
         refetchType: "active",
