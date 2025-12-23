@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.5%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96.5%;
+    --accent-foreground: 0 0% 9%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 142 71% 45%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --radius: 0.375rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) rotate(360deg) translateY(-20px);
+  }
+}
+
+/* Solid green star shape using CSS */
+.star-shape {
+  background-color: hsl(var(--primary));
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  display: inline-block;
+}
+
+/* Star rise animations with horizontal spread */
+@keyframes star-rise-1 {
+  0% {
+    opacity: 0;
+    transform: translateX(-80%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-80%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-80%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-80%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-60%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-60%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-60%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-60%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-3 {
+  0% {
+    opacity: 0;
+    transform: translateX(-40%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-40%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-40%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-40%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-4 {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-5 {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-30%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-30%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-6 {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-20%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-20%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-7 {
+  0% {
+    opacity: 0;
+    transform: translateX(-70%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-70%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-70%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-70%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes star-rise-8 {
+  0% {
+    opacity: 0;
+    transform: translateX(-10%) translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-10%) translateY(-15px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-10%) translateY(-35px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-10%) translateY(-70px) scale(0.3);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-out-down {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-slide-out-up {
+  animation: slide-out-up 0.3s ease-out;
+}
+
+.animate-slide-out-down {
+  animation: slide-out-down 0.3s ease-out;
+}
