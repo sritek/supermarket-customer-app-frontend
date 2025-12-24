@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { productService } from "../services/products";
 import type { Product } from "../services/products";
 
 export interface CartItemValidation {
@@ -30,11 +29,11 @@ export const useValidateCartItems = (
           // Admin DB products may not have slug, so use product data from cart
           // We already have the latest product data from the cart response
           const currentProduct = item.product;
-          const availableStock = currentProduct.stockQuantity || currentProduct.stock || 0;
+          const availableStock = currentProduct.stockQuantity || 0;
 
           validations.push({
             productId: currentProduct._id,
-            productSlug: currentProduct.slug || currentProduct.sku || currentProduct._id,
+            productSlug: currentProduct.slug || currentProduct._id,
             requestedQuantity: item.quantity,
             availableStock: availableStock,
             isOutOfStock: availableStock === 0,
@@ -44,10 +43,10 @@ export const useValidateCartItems = (
           console.error(`Error validating product ${item.product?._id || 'unknown'}:`, error);
           // If validation fails, use data from cart item
           const currentProduct = item.product;
-          const availableStock = currentProduct?.stockQuantity || currentProduct?.stock || 0;
+          const availableStock = currentProduct?.stockQuantity || 0;
           validations.push({
             productId: currentProduct?._id || 'unknown',
-            productSlug: currentProduct?.slug || currentProduct?.sku || currentProduct?._id || 'unknown',
+            productSlug: currentProduct?.slug || currentProduct?._id || 'unknown',
             requestedQuantity: item.quantity,
             availableStock: availableStock,
             isOutOfStock: availableStock === 0,

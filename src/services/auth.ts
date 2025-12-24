@@ -27,6 +27,7 @@ export interface AuthResponse {
   message?: string;
   userId?: string;
   otp?: string; // OTP returned in test/development mode
+  error?: string; // Error message when success is false
 }
 
 export const authService = {
