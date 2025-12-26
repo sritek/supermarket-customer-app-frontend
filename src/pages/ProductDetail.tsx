@@ -21,8 +21,9 @@ const ProductDetail = () => {
   const product = data?.product;
 
   const handleAddToCart = async () => {
-    if (!product || product.stockQuantity === 0) {
-      toast.error("Product is out of stock");
+    const isUnavailable = product?.status === "UNAVAILABLE";
+    if (!product || product.stockQuantity === 0 || isUnavailable) {
+      toast.error(isUnavailable ? "Product is currently unavailable" : "Product is out of stock");
       return;
     }
 
@@ -117,7 +118,8 @@ const ProductDetail = () => {
     );
   }
 
-  const isOutOfStock = product.stockQuantity === 0;
+  const isUnavailable = product.status === "UNAVAILABLE";
+  const isOutOfStock = product.stockQuantity === 0 || isUnavailable;
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -167,10 +169,11 @@ const ProductDetail = () => {
                   : "text-muted-foreground"
               }`}
             >
-              Stock:{" "}
-              {isOutOfStock
-                ? "Out of Stock"
-                : `${product.stockQuantity} available`}
+              {isUnavailable
+                ? "Status: Currently Unavailable"
+                : isOutOfStock
+                ? "Stock: Out of Stock"
+                : `Stock: ${product.stockQuantity} available`}
             </p>
           </div>
 

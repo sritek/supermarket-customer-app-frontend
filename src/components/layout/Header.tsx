@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ShoppingCart,
   User,
@@ -17,6 +17,7 @@ import { useCategories } from "../../hooks/useProducts";
 const Header = () => {
   const { isAuthenticated, user, logout } = useAuthStore();
   const cartCount = useCartCount();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [showCategoriesMenu, setShowCategoriesMenu] = useState(false);
   const [, setHoveredCategory] = useState<string | null>(null);
@@ -26,6 +27,13 @@ const Header = () => {
   const { data: categoriesData } = useCategories();
   const categories = categoriesData?.categories || [];
   const prevCartCountRef = useRef(cartCount);
+
+  // Sync search query with URL params
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get("search") || "";
+    setSearchQuery(searchParam);
+  }, [location.search]);
 
   // Close categories menu when clicking outside
   useEffect(() => {
@@ -67,6 +75,9 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      // If search is cleared, navigate to all products
+      navigate("/products");
     }
   };
 
@@ -144,7 +155,13 @@ const Header = () => {
                 type="text"
                 placeholder="Search for products..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  // If search is cleared, navigate to all products
+                  if (!e.target.value.trim()) {
+                    navigate("/products");
+                  }
+                }}
                 className="w-full h-10 pl-10 pr-4 rounded-md border border-input bg-background text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-primary"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />

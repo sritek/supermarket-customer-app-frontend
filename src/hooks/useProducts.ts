@@ -53,10 +53,18 @@ export const useProductsByCategory = (
 };
 
 export const useSearchProducts = (query: string) => {
-  return useQuery<{ success: boolean; products: Product[] }>({
+  return useQuery<{ success: boolean; products: Product[] } | ProductsResponse>({
     queryKey: ["searchProducts", query],
-    queryFn: () => productService.searchProducts(query),
-    enabled: !!query && query.trim().length > 0,
+    queryFn: async () => {
+      // If query is empty, return all products instead of searching
+      if (!query || query.trim().length === 0) {
+        const result = await productService.getProducts({ page: 1, limit: 100 });
+        // Normalize to match searchProducts return format
+        return { success: result.success, products: result.products };
+      }
+      return productService.searchProducts(query);
+    },
+    enabled: true, // Always enabled - will return all products if query is empty
   });
 };
 

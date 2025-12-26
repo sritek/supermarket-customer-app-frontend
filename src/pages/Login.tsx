@@ -16,6 +16,7 @@ import {
 } from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import Alert from "../components/ui/Alert";
 import { authService } from "../services/auth";
 import { useAuthStore } from "../store/authStore";
 import { cartService } from "../services/cart";
@@ -91,10 +92,22 @@ const Login = () => {
           queryClient.invalidateQueries({ queryKey: ["cart"] });
         }
       } else {
-        setError(response.message || "Login failed");
+        setError(response.error || response.message || "Login failed");
       }
     } catch (err: unknown) {
-      setError((err as Error).message || "Login failed. Please try again.");
+      // Extract error message from axios error response
+      let errorMessage = "Login failed. Please try again.";
+      
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as { response?: { data?: { error?: string; message?: string } } };
+        errorMessage = axiosError.response?.data?.error || 
+                      axiosError.response?.data?.message || 
+                      errorMessage;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -109,9 +122,9 @@ const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
-              <div className="p-3 bg-destructive/10 text-destructive text-sm rounded-md">
-                {error}
-              </div>
+              <Alert variant="destructive">
+                <p className="text-sm font-medium">{error}</p>
+              </Alert>
             )}
 
             <div>

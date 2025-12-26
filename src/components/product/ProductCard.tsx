@@ -41,8 +41,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   );
   const [prevQuantity, setPrevQuantity] = useState(1);
 
-  const isOutOfStock = product.stockQuantity === 0;
-  const maxQuantity = product.stockQuantity;
+  // Treat UNAVAILABLE status as out of stock for customer UI
+  const isUnavailable = product.status === "UNAVAILABLE";
+  const isOutOfStock = product.stockQuantity === 0 || isUnavailable;
+  const maxQuantity = isUnavailable ? 0 : product.stockQuantity;
 
   // Check if product is in cart
   // Include cartUpdated and cartMutationVersion as dependencies so this recalculates when cart changes
@@ -249,7 +251,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {/* Stock Badges */}
           {isOutOfStock && (
             <div className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded font-semibold shadow-sm">
-              Out of Stock
+              {isUnavailable ? "Unavailable" : "Out of Stock"}
             </div>
           )}
           {!isOutOfStock && product.stockQuantity < 10 && (

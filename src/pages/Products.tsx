@@ -85,6 +85,7 @@ const Products = () => {
   const categories = categoriesData?.categories || [];
 
   // Fetch products based on APPLIED filters (from URL params)
+  // If search param exists but is empty, treat it as no search (show all products)
   const hasSearch = search && search.trim().length > 0;
   const hasCategory = appliedCategory && appliedCategory.trim().length > 0;
 
@@ -111,7 +112,7 @@ const Products = () => {
     );
 
   const { data: searchData, isLoading: isLoadingSearch } = useSearchProducts(
-    search || ""
+    hasSearch ? search : ""
   );
 
   const { data: allProductsData, isLoading: isLoadingAll } = useProducts(
@@ -132,7 +133,8 @@ const Products = () => {
   let isLoading = false;
 
   if (hasSearch) {
-    products = searchData?.products || [];
+    // If search query exists, use search results
+    products = (searchData as { products?: Product[] })?.products || [];
     isLoading = isLoadingSearch;
   } else if (hasCategory) {
     // Use category data if available, fallback to empty array while loading
@@ -140,8 +142,10 @@ const Products = () => {
     isLoading = isLoadingCategory;
   } else {
     // Use all products data if available, fallback to empty array while loading
-    products = allProductsData?.products || [];
-    isLoading = isLoadingAll;
+    // Also use searchData if it's available (when search was cleared)
+    const searchProducts = (searchData as { products?: Product[] })?.products;
+    products = allProductsData?.products || searchProducts || [];
+    isLoading = isLoadingAll || isLoadingSearch;
   }
 
   // Ensure we show loading state only when actually fetching and no data exists
