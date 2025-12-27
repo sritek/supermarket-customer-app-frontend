@@ -177,8 +177,8 @@ const Signup = () => {
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={loading || otp.length !== 6}>
-                {loading ? 'Verifying...' : 'Verify OTP'}
+              <Button type="submit" className="w-full" loading={loading} disabled={otp.length !== 6}>
+                Verify OTP
               </Button>
 
               <Button

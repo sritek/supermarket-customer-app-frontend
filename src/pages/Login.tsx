@@ -149,8 +149,8 @@ const Login = () => {
               )}
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+            <Button type="submit" className="w-full" loading={loading}>
+              Login
             </Button>
           </form>
 

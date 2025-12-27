@@ -488,16 +488,14 @@ const Checkout = () => {
               <Button
                 className="w-full"
                 onClick={handlePlaceOrder}
+                loading={loading}
                 disabled={
-                  loading ||
                   !selectedAddressId ||
                   items.length === 0 ||
                   hasStockIssues
                 }
               >
-                {loading
-                  ? "Placing Order..."
-                  : hasStockIssues
+                {hasStockIssues
                   ? "Fix Stock Issues First"
                   : "Place Order"}
               </Button>

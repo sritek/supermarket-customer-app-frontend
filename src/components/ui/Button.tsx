@@ -1,14 +1,16 @@
 import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
+import { LoadingSpinner } from './Loading';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
+  loading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'default', size = 'md', children, ...props }, ref) => {
+  ({ className, variant = 'default', size = 'md', loading, children, disabled, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -24,8 +26,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           },
           className
         )}
+        disabled={disabled || loading}
         {...props}
       >
+        {loading && <LoadingSpinner size="sm" className="mr-2" />}
         {children}
       </button>
     );
